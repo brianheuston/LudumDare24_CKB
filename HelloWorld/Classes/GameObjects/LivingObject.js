@@ -8,8 +8,7 @@ LivingObject.prototype = {
     fileName: null,
     rect: null,
     sprite: null,
-    BaseStats: {
-    },
+    baseStats: {},
     currentHealth:0,
     currentMana:0,
     manaRegenRate:null, // TODO: Base mana regen rate on will or will + this?
@@ -54,6 +53,10 @@ LivingObject.prototype = {
     
     CalculateStats:function() {
       var ret = {};
+      for (var statName in baseStats) {
+        ret[statName] = baseStats[statName];
+      }
+      
       for (var slot in this.equipped) {
         var length = this.equipped[slot].statNames.length;
         for (var i = 0; i < length; i++) {
