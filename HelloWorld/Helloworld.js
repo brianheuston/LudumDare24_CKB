@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 cc.loadjs('Map.js');//19
+cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
 
 var Helloworld = cc.Layer.extend({
@@ -36,6 +37,7 @@ var Helloworld = cc.Layer.extend({
     map:null,
     scale:5,
     centerPos:null,
+    player:null,
 
     init:function () {
 
@@ -82,10 +84,11 @@ var Helloworld = cc.Layer.extend({
         //var explosion = cc.ParticleFire.create();
         //this.addChild(explosion);
 
-        Player.init("Resources/oryx_lofi/lofi_char.png", 
-                    new cc.Rect(0, 0, 8*this.scale, 8*this.scale),this.scale);
-        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.addChild(Player.GetSprite());
+        player = new Player("Resources/oryx_lofi/lofi_char.png", 
+                            new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
+        player.init();
+        player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.addChild(player.GetSprite());
 
         return true;
     },
