@@ -23,6 +23,8 @@ var Player = new Object({
     attackTimeout:null,
     lastAttackTimestamp:null,
 
+    currentPosition:null,
+
     checkDirection:function(movePoint, screenSize)
     {
         isFacingLeft = (movePoint.x > screenSize.x / 2) ? false : true;

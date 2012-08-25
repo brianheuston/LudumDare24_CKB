@@ -32,6 +32,7 @@ var Helloworld = cc.Layer.extend({
     helloLabel:null,
     circle:null,
     sprite:null,
+    size:null,
 
     init:function () {
 
@@ -43,7 +44,7 @@ var Helloworld = cc.Layer.extend({
         // 2. add a menu item with "X" image, which is clicked to quit the program
         //    you may modify it.
         // ask director the window size
-        var size = cc.Director.sharedDirector().getWinSize();
+        size = cc.Director.sharedDirector().getWinSize();
 
         // add a "close" icon to exit the progress. it's an autorelease object
         /*var closeItem = cc.MenuItemImage.create(
@@ -77,7 +78,24 @@ var Helloworld = cc.Layer.extend({
         Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
         this.addChild(Player.GetSprite());
 
+        this.setIsTouchEnabled(true);
+
         return true;
+    },
+
+    ccTouchesEnded:function(touches, event) {
+        if (touches.length <= 0)
+            return;
+
+        var touch = touches[0];
+
+        var location = touch.locationInView(touch.view());
+
+        this.setPosition(cc.ccp(this.getPosition().x + ((size.width / 2 - location.x) / 2),
+                                this.getPosition().y + ((size.height / 2 - location.y) / 2)));
+        //Player.GetSprite().setPosition(cc.ccp(size.x / 2 - location.x / 2, size.y / 2 - location.y / 2));
+        Player.GetSprite().setPosition(cc.ccp(Player.GetSprite().getPosition().x - (Player.GetSprite().getPosition().x - location.x) / 2, 
+                                             (Player.GetSprite().getPosition().y - (Player.GetSprite().getPosition().y - location.y) / 2)));
     }
 
 });
