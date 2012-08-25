@@ -74,8 +74,8 @@ var Helloworld = cc.Layer.extend({
         var map = new cc.LazyLayer();
         this.addChild(map);
         Map.init(map);
-        var explosion = cc.ParticleFire.create();
-        this.addChild(explosion);
+        //var explosion = cc.ParticleFire.create();
+        //this.addChild(explosion);
 
   //      Player.init("Resources/oryx_lofi/lofi_environment.png");
 //        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
