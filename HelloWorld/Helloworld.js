@@ -33,6 +33,8 @@ var Helloworld = cc.Layer.extend({
     circle:null,
     sprite:null,
     size:null,
+    map:null,
+    centerPos:null,
 
     init:function () {
 
@@ -46,6 +48,7 @@ var Helloworld = cc.Layer.extend({
         //    you may modify it.
         // ask director the window size
         size = cc.Director.sharedDirector().getWinSize();
+        centerPos = cc.ccp(size.width / 2, size.height / 2);
 
         // add a "close" icon to exit the progress. it's an autorelease object
         /*var closeItem = cc.MenuItemImage.create(
@@ -71,15 +74,15 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
-        var map = new cc.LazyLayer();
-        this.addChild(map);
-        Map.init(map);
+        this.map = new cc.LazyLayer();
+        this.addChild(this.map);
+        Map.init(this.map);
         var explosion = cc.ParticleFire.create();
         this.addChild(explosion);
 
-  //      Player.init("Resources/oryx_lofi/lofi_environment.png");
-//        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-//        this.addChild(Player.GetSprite());
+        Player.init("Resources/oryx_lofi/lofi_environment.png");
+        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.addChild(Player.GetSprite());
 
         this.setIsTouchEnabled(true);
 
@@ -94,11 +97,10 @@ var Helloworld = cc.Layer.extend({
 
         var location = touch.locationInView(touch.view());
 
-        this.setPosition(cc.ccp(this.getPosition().x + ((size.width / 2 - location.x) / 2),
-                                this.getPosition().y + ((size.height / 2 - location.y) / 2)));
-        //Player.GetSprite().setPosition(cc.ccp(size.x / 2 - location.x / 2, size.y / 2 - location.y / 2));
-        Player.GetSprite().setPosition(cc.ccp(Player.GetSprite().getPosition().x - (Player.GetSprite().getPosition().x - location.x) / 2, 
-                                             (Player.GetSprite().getPosition().y - (Player.GetSprite().getPosition().y - location.y) / 2)));
+        var moveDelta = cc.ccp((location.x - centerPos.x),
+                               (location.y - centerPos.y));
+        this.map.setPosition(cc.ccp(this.map.getPosition().x - moveDelta.x,
+                                    this.map.getPosition().y - moveDelta.y));
     }
 
 });
