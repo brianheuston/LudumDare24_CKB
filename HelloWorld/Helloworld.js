@@ -24,6 +24,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 cc.loadjs('Map.js');//19
+cc.loadjs('Classes/GameObjects/Player.js');
 
 var Helloworld = cc.Layer.extend({
     isMouseDown:false,
@@ -68,6 +69,10 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
+
+        Player.init("Resources/HeroThief.png");
+        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.addChild(Player.GetSprite());
 
         var map = new cc.Layer();
         this.addChild(map);

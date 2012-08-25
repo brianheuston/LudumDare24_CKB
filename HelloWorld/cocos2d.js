@@ -79,7 +79,8 @@ cc.loadjs = function (filename) {
                 {type:"image", src:"Resources/Wall_forest.png"},
                 {type:"image", src:"Resources/CloseNormal.png"},
                 {type:"image", src:"Resources/Dirt_forest.png"},
-                {type:"image", src:"Resources/CloseSelected.png"}
+                {type:"image", src:"Resources/CloseSelected.png"},
+                {type:"image", src:"Resources/HeroThief.png"}
             ]);
         }
     };
