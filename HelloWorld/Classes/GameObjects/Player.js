@@ -26,7 +26,7 @@ var Player = new Object({
     checkDirection:function(movePoint, screenSize)
     {
         isFacingLeft = (movePoint.x > screenSize.x / 2) ? false : true;
-    }
+    },
 
     init:function(fileName) {
         sprite = cc.Sprite.create(fileName);
