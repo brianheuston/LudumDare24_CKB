@@ -1,4 +1,4 @@
-/****************************************************************************
+/*w/Users/chris/LudumDare24_CKB//****************************************************************************
  Copyright (c) 2010-2012 cocos2d-x.org
  Copyright (c) 2008-2010 Ricardo Quesada
  Copyright (c) 2011      Zynga Inc.
@@ -24,85 +24,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-var Helloworld = cc.Layer.extend({
-    isMouseDown:false,
-    helloImg:null,
-    helloLabel:null,
-    circle:null,
-    sprite:null,
+Map = new Object({
+    world:[],
+    WIDTH:20,
+    HEIGHT:20,
+    loadWorld: function(layer){
+    	var worldInNumbers =   [[0,0,0,0,0,0,0,0,0,0],
+    							[0,1,1,1,1,1,1,1,1,1],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0],
+    							[0,1,0,0,0,0,0,0,0,0]
+    	]
+		var spriteFiles = ["Resources/Dirt_forest.png","Resources/Wall_forest.png"];
+		var i = 0;
+		var j = 0;
+		this.world = [];
+		for(i = 0; i < 10; i++){
+			this.world[i] = [];
+			for(j = 0; j < 10; j++){
+				this.world[i][j] = cc.Sprite.create(spriteFiles[worldInNumbers[i][j]]);
+		        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
+		        this.world[i][j].setPosition(cc.ccp(this.WIDTH*j,this.HEIGHT*10- this.HEIGHT*i));
+		
+		        layer.addChild(this.world[i][j], 0);
+			}
+		}
+	    
+    },
 
-    init:function () {
+    init:function (layer) {
 
         //////////////////////////////
         // 1. super init first
-        this._super();
-
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
-        var size = cc.Director.sharedDirector().getWinSize();
-
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
-            "Resources/CloseNormal.png",
-            "Resources/CloseSelected.png",
-            this,
-            function () {
-                history.go(-1);
-            });
-        closeItem.setAnchorPoint(new cc.Point(0.5,0.5));
-
-        var menu = cc.Menu.create(closeItem, null);
-        menu.setPosition( cc.PointZero() );
-        this.addChild(menu, 1);
-        closeItem.setPosition(new cc.Point(size.width -20 , 20));
-
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Arial", 38);
-        // position the label on the center of the screen
-        this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
-        // add the label as a child to this layer
-        this.addChild(this.helloLabel, 5);
-
-        var lazyLayer = new cc.LazyLayer();
-        this.addChild(lazyLayer);
-
-        // add "HelloWorld" splash screen"
-        this.sprite = cc.Sprite.create("Resources/HelloWorld.png");
-        this.sprite.setAnchorPoint(cc.ccp(0.5, 0.5));
-        this.sprite.setPosition(cc.ccp(size.width / 2, size.height / 2));
-
-        lazyLayer.addChild(this.sprite, 0);
-
-        return true;
+        this.loadWorld(layer);
     }
 
 });
 
-Helloworld.scene = function () {
-    // 'scene' is an autorelease object
-    var scene = cc.Scene.create();
-
-    // 'layer' is an autorelease object
-    var layer = this.node();
-    scene.addChild(layer);
-    return scene;
-};
-// implement the "static node()" method manually
-Helloworld.node = function () {
-    var ret = new Helloworld();
-
-    // Init the helloworld display layer.
-    if (ret && ret.init()) {
-        return ret;
-    }
-
-    return null;
-};
 
 
 

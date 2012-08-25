@@ -23,6 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+cc.loadjs('Map.js');//19
 
 var Helloworld = cc.Layer.extend({
     isMouseDown:false,
@@ -44,7 +45,7 @@ var Helloworld = cc.Layer.extend({
         var size = cc.Director.sharedDirector().getWinSize();
 
         // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
+        /*var closeItem = cc.MenuItemImage.create(
             "Resources/CloseNormal.png",
             "Resources/CloseSelected.png",
             this,
@@ -57,7 +58,7 @@ var Helloworld = cc.Layer.extend({
         menu.setPosition( cc.PointZero() );
         this.addChild(menu, 1);
         closeItem.setPosition(new cc.Point(size.width -20 , 20));
-
+        */
         /////////////////////////////
         // 3. add your codes below...
         // add a label shows "Hello World"
@@ -68,16 +69,9 @@ var Helloworld = cc.Layer.extend({
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);
 
-        var lazyLayer = new cc.LazyLayer();
-        this.addChild(lazyLayer);
-
-        // add "HelloWorld" splash screen"
-        this.sprite = cc.Sprite.create("Resources/HelloWorld.png");
-        this.sprite.setAnchorPoint(cc.ccp(0.5, 0.5));
-        this.sprite.setPosition(cc.ccp(size.width / 2, size.height / 2));
-
-        lazyLayer.addChild(this.sprite, 0);
-
+        var map = new cc.Layer();
+        this.addChild(map);
+        Map.init(map);
         return true;
     }
 
