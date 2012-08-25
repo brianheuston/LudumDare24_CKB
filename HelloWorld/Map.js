@@ -23,34 +23,23 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
+cc.loadjs('MapPieces.js');//19/
 Map = new Object({
     world:[],
     WIDTH:20,
     HEIGHT:20,
-    loadWorld: function(layer){
-    	var worldInNumbers =   [[0,0,0,0,0,0,0,0,0,0],
-    							[0,1,1,1,1,1,1,1,1,1],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0],
-    							[0,1,0,0,0,0,0,0,0,0]
-    	]
+    loadWorld: function(layer,mapPiece,x, y){
+    	var worldInNumbers =   mapPiece.grid;
 		var spriteFiles = ["Resources/Dirt_forest.png","Resources/Wall_forest.png"];
 		var i = 0;
 		var j = 0;
 		this.world = [];
-		for(i = 0; i < 10; i++){
+		for(i = 0; i < mapPiece.y; i++){
 			this.world[i] = [];
-			for(j = 0; j < 10; j++){
+			for(j = 0; j < mapPiece.x; j++){
 				this.world[i][j] = cc.Sprite.create(spriteFiles[worldInNumbers[i][j]]);
 		        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
-		        this.world[i][j].setPosition(cc.ccp(this.WIDTH*j,this.HEIGHT*10- this.HEIGHT*i));
+		        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));
 		
 		        layer.addChild(this.world[i][j], 0);
 			}
@@ -59,10 +48,20 @@ Map = new Object({
     },
 
     init:function (layer) {
-
         //////////////////////////////
         // 1. super init first
-        this.loadWorld(layer);
+        this.loadWorld(layer,MapPieces[1],0,0);
+        this.loadWorld(layer,MapPieces[7],10*this.WIDTH,0);
+        this.loadWorld(layer,MapPieces[7],20*this.WIDTH,0);
+        this.loadWorld(layer,MapPieces[3],30*this.WIDTH,0);
+        this.loadWorld(layer,MapPieces[5],0,10*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[8],10*this.WIDTH,10*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[8],20*this.WIDTH,10*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[6],30*this.WIDTH,10*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[0],0,20*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[4],10*this.WIDTH,20*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[4],20*this.WIDTH,20*this.HEIGHT);
+        this.loadWorld(layer,MapPieces[2],30*this.WIDTH,20*this.HEIGHT);
     }
 
 });
