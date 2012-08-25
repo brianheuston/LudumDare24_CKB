@@ -68,10 +68,15 @@ Map = new Object({
 	    
     },
 
+    handleKey:function(e){
+	    
+        alert('key'+e);
+    },
     init:function (layer,scale) {
         //////////////////////////////
         // 1. super init first
         this.sprites = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_environment.png",200);
+//        this.setKeyboardEnabled(true);
         this.scale = scale;
         this.HEIGHT *= scale;
         this.WIDTH *=scale;
@@ -89,7 +94,13 @@ Map = new Object({
     },
     move:function(x,y){
 	    
+    },
+    keyUp:function(e){
+
+    },
+    keyDown:function(e){
     }
+
     
 
 });

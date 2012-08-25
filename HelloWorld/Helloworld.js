@@ -23,9 +23,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+cc.loadjs('../box2d/box2d.js');
+cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
 cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
+
+
 
 var Helloworld = cc.Layer.extend({
     isMouseDown:false,
@@ -39,7 +44,7 @@ var Helloworld = cc.Layer.extend({
     centerPos:null,
     player:null,
 
-    init:function () {
+    init:function () { 
 
         //////////////////////////////
         // 1. super init first
@@ -78,9 +83,11 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
-        this.map = new cc.Layer();
+        this.map = new Box2DLayer();
         this.addChild(this.map);
+        
         Map.init(this.map,this.scale);
+        cc.KeypadHandler.create(this);
         //var explosion = cc.ParticleFire.create();
         //this.addChild(explosion);
 
@@ -88,13 +95,12 @@ var Helloworld = cc.Layer.extend({
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
         player.init();
         player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.addChild(player.GetSprite());
-
+        this.map.addSprite(player.GetSprite(),size.width/2,size.height/2,2);
         return true;
     },
 
     ccTouchesEnded:function(touches, event) {
-        if (touches.length <= 0)
+        /*if (touches.length <= 0)
             return;
 
         var touch = touches[0];
@@ -104,9 +110,14 @@ var Helloworld = cc.Layer.extend({
         var moveDelta = cc.ccp((location.x - centerPos.x),
                                (location.y - centerPos.y));
         this.map.setPosition(cc.ccp(this.map.getPosition().x - moveDelta.x,
-                                    this.map.getPosition().y - moveDelta.y));
-    }
+                                    this.map.getPosition().y - moveDelta.y));*/
+    },
+    keyUp:function(e){
 
+    },
+    keyDown:function(e){
+
+    }
 });
 
 Helloworld.scene = function () {
