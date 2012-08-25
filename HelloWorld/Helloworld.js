@@ -39,6 +39,7 @@ var Helloworld = cc.Layer.extend({
         //////////////////////////////
         // 1. super init first
         this._super();
+        this.setIsKeypadEnabled(true);
 
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -70,9 +71,11 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
-        var map = new cc.Layer();
+        var map = new cc.LazyLayer();
         this.addChild(map);
         Map.init(map);
+        var explosion = cc.ParticleFire.create();
+        this.addChild(explosion);
 
   //      Player.init("Resources/oryx_lofi/lofi_environment.png");
 //        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
