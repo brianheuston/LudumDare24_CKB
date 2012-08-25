@@ -34,6 +34,7 @@ var Helloworld = cc.Layer.extend({
     sprite:null,
     size:null,
     map:null,
+    scale:5,
     centerPos:null,
 
     init:function () {
@@ -75,26 +76,14 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
-<<<<<<< HEAD
-        this.map = new cc.LazyLayer();
+        this.map = new cc.Layer();
         this.addChild(this.map);
-        Map.init(this.map);
+        Map.init(this.map,this.scale);
         //var explosion = cc.ParticleFire.create();
         //this.addChild(explosion);
-=======
-        var map = new cc.LazyLayer();
-        this.addChild(map);
-        Map.init(map);
-        //var explosion = cc.ParticleFire.create();
-        //this.addChild(explosion);
-
-  //      Player.init("Resources/oryx_lofi/lofi_environment.png");
-//        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-//        this.addChild(Player.GetSprite());
->>>>>>> UNFIRE
 
         Player.init("Resources/oryx_lofi/lofi_char.png", 
-                    new cc.Rect(0, 0, 7, 7));
+                    new cc.Rect(0, 0, 8*this.scale, 8*this.scale),this.scale);
         Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
         this.addChild(Player.GetSprite());
 

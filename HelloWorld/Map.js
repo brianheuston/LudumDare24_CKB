@@ -23,33 +23,35 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-cc.loadjs('MapPieces.js');//19/
+cc.loadjs('MapPieces.js');
+cc.loadjs('MapTile.js');
 Map = new Object({
     world:[],
-    WIDTH:40,
-    HEIGHT:40,
+    pieces:[],
+    WIDTH:8,
+    HEIGHT:8,
     sprites:null,
-    loadWorld: function(layer,mapPiece,x, y){
+    scale:1,
+    loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ){
     	var worldInNumbers =   mapPiece.grid;
 		var i = 0;
 		var j = 0;
 		this.world = [];
+		var tile;
 		for(i = 0; i < mapPiece.y; i++){
 			this.world[i] = [];
+			if(pieceX == 0){
+				this.pieces[pieceY+i] = [];
+			}
 			for(j = 0; j < mapPiece.x; j++){
-				this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(16*5,32*5,8*5,8*5));
-		        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
-//		        this.world[i][j].setScale(2);
-		        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
-		        layer.addChild(this.world[i][j], 0);
-		        if(worldInNumbers[i][j] == 1){
-					this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(9*40,40*4,40,40));
-			        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
-	//		        this.world[i][j].setScale(2);
-			        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
-			        layer.addChild(this.world[i][j], 1);			        
-		        }
-		        
+//				console.log("y:"+pieceY+" x:"+pieceX+" i:"+i+" j:"+j+" world:"+worldInNumbers[i][j]);
+// 				console.log("x:"+MapTile[worldInNumbers[i][j]].X*40+" y:"+MapTile[worldInNumbers[i][j]].Y*HEIGHT+" num:"+worldInNumbers[i][j]); 
+				tile = MapTile[worldInNumbers[i][j]];
+				this.pieces[pieceY+i][pieceX+j] = worldInNumbers[i][j];
+				if(tile.overlay > -1){
+			        this.addToScreen(MapTile[tile.overlay].X,MapTile[tile.overlay].Y,x,y,i,j,mapPiece,layer);					
+				}
+		        this.addToScreen(tile.X,tile.Y,x,y,i,j,mapPiece,layer);
 		        
 		        
 		        
@@ -57,26 +59,38 @@ Map = new Object({
 		}
 	    
     },
+    addToScreen:function(X,Y,x,y,i,j,mapPiece,layer){
+		this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(X*this.WIDTH,Y*this.HEIGHT,this.WIDTH,this.HEIGHT));
+        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
+//		        this.world[i][j].setScale(2);
+        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
+        layer.addChild(this.world[i][j], 0);
+	    
+    },
 
-    init:function (layer) {
+    init:function (layer,scale) {
         //////////////////////////////
         // 1. super init first
         this.sprites = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_environment.png",200);
+        this.scale = scale;
+        this.HEIGHT *= scale;
+        this.WIDTH *=scale;
         layer.addChild(this.sprites,0,99);
+        var largePieces = [[1,7,7,3],
+        			[5,8,8,6],
+        			[0,4,4,2]];
+        			
+		for(i = 0; i < 3;i++){					
+			for(j = 0; j <4; j++){
+				this.loadWorld(layer,MapPieces[largePieces[i][j]],10*j*this.WIDTH,10*i*this.HEIGHT,i*10,j*10);
+			}
+		}        			        
         
-        this.loadWorld(layer,MapPieces[1],0,0);
-        this.loadWorld(layer,MapPieces[7],10*this.WIDTH,0);
-        this.loadWorld(layer,MapPieces[7],20*this.WIDTH,0);
-        this.loadWorld(layer,MapPieces[3],30*this.WIDTH,0);
-        this.loadWorld(layer,MapPieces[5],0,10*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[8],10*this.WIDTH,10*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[8],20*this.WIDTH,10*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[6],30*this.WIDTH,10*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[0],0,20*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[4],10*this.WIDTH,20*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[4],20*this.WIDTH,20*this.HEIGHT);
-        this.loadWorld(layer,MapPieces[2],30*this.WIDTH,20*this.HEIGHT);
+    },
+    move:function(x,y){
+	    
     }
+    
 
 });
 
