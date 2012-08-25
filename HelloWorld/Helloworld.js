@@ -74,9 +74,9 @@ var Helloworld = cc.Layer.extend({
         this.addChild(map);
         Map.init(map);
 
-        Player.init("Resources/HeroThief.png");
-        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.addChild(Player.GetSprite());
+  //      Player.init("Resources/oryx_lofi/lofi_environment.png");
+//        Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+//        this.addChild(Player.GetSprite());
 
         this.setIsTouchEnabled(true);
 

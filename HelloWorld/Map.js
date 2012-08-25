@@ -28,21 +28,31 @@ Map = new Object({
     world:[],
     WIDTH:40,
     HEIGHT:40,
+    sprites:null,
     loadWorld: function(layer,mapPiece,x, y){
     	var worldInNumbers =   mapPiece.grid;
-		var spriteFiles = ["Resources/Dirt_forest.png","Resources/Wall_forest.png"];
 		var i = 0;
 		var j = 0;
 		this.world = [];
 		for(i = 0; i < mapPiece.y; i++){
 			this.world[i] = [];
 			for(j = 0; j < mapPiece.x; j++){
-				this.world[i][j] = cc.Sprite.create(spriteFiles[worldInNumbers[i][j]]);
+				this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(16*5,32*5,8*5,8*5));
 		        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
-		        this.world[i][j].setScale(2);
-		        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));
-		
+//		        this.world[i][j].setScale(2);
+		        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
 		        layer.addChild(this.world[i][j], 0);
+		        if(worldInNumbers[i][j] == 1){
+					this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(9*40,40*4,40,40));
+			        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
+	//		        this.world[i][j].setScale(2);
+			        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
+			        layer.addChild(this.world[i][j], 1);			        
+		        }
+		        
+		        
+		        
+		        
 			}
 		}
 	    
@@ -51,6 +61,9 @@ Map = new Object({
     init:function (layer) {
         //////////////////////////////
         // 1. super init first
+        this.sprites = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_environment.png",200);
+        layer.addChild(this.sprites,0,99);
+        
         this.loadWorld(layer,MapPieces[1],0,0);
         this.loadWorld(layer,MapPieces[7],10*this.WIDTH,0);
         this.loadWorld(layer,MapPieces[7],20*this.WIDTH,0);

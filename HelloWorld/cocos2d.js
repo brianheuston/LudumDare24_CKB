@@ -75,12 +75,7 @@ cc.loadjs = function (filename) {
             };
             //preload ressources
             cc.Loader.shareLoader().preload([
-                {type:"image", src:"Resources/HelloWorld.png"},
-                {type:"image", src:"Resources/Wall_forest.png"},
-                {type:"image", src:"Resources/CloseNormal.png"},
-                {type:"image", src:"Resources/Dirt_forest.png"},
-                {type:"image", src:"Resources/CloseSelected.png"},
-                {type:"image", src:"Resources/HeroThief.png"}
+                {type:"image", src:"Resources/oryx_lofi/lofi_environment.png"}
             ]);
         }
     };
