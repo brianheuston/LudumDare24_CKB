@@ -26,8 +26,8 @@
 cc.loadjs('MapPieces.js');//19/
 Map = new Object({
     world:[],
-    WIDTH:20,
-    HEIGHT:20,
+    WIDTH:40,
+    HEIGHT:40,
     loadWorld: function(layer,mapPiece,x, y){
     	var worldInNumbers =   mapPiece.grid;
 		var spriteFiles = ["Resources/Dirt_forest.png","Resources/Wall_forest.png"];
@@ -39,6 +39,7 @@ Map = new Object({
 			for(j = 0; j < mapPiece.x; j++){
 				this.world[i][j] = cc.Sprite.create(spriteFiles[worldInNumbers[i][j]]);
 		        this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
+		        this.world[i][j].setScale(2);
 		        this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));
 		
 		        layer.addChild(this.world[i][j], 0);

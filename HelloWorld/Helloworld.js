@@ -69,7 +69,6 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
-
         var map = new cc.Layer();
         this.addChild(map);
         Map.init(map);
