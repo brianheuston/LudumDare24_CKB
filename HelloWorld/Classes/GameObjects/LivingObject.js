@@ -8,11 +8,10 @@ LivingObject.prototype = {
     fileName: null,
     rect: null,
     sprite: null,
-    baseStats: {},
+    
     currentHealth:0,
     currentMana:0,
-    manaRegenRate:null, // TODO: Base mana regen rate on will or will + this?
-    
+    baseStats: {},
     equipped:{},
     inventory:[],
     
