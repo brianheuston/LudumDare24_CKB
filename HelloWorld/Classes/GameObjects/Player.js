@@ -30,8 +30,8 @@ var Player = new Object({
         isFacingLeft = (movePoint.x > screenSize.x / 2) ? false : true;
     },
 
-    init:function(fileName) {
-        sprite = cc.Sprite.create(fileName);
+    init:function(fileName, rect) {
+        sprite = cc.Sprite.create(fileName, rect);
     },
 
     ChangeHealth:function(value, isIncrease) {

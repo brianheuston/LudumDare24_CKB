@@ -42,6 +42,7 @@ var Helloworld = cc.Layer.extend({
         // 1. super init first
         this._super();
         this.setIsKeypadEnabled(true);
+        this.setIsTouchEnabled(true);
 
         /////////////////////////////
         // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -77,14 +78,13 @@ var Helloworld = cc.Layer.extend({
         this.map = new cc.LazyLayer();
         this.addChild(this.map);
         Map.init(this.map);
-        var explosion = cc.ParticleFire.create();
-        this.addChild(explosion);
+        //var explosion = cc.ParticleFire.create();
+        //this.addChild(explosion);
 
-        Player.init("Resources/oryx_lofi/lofi_environment.png");
+        Player.init("Resources/oryx_lofi/lofi_char.png", 
+                    new cc.Rect(0, 0, 7, 7));
         Player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
         this.addChild(Player.GetSprite());
-
-        this.setIsTouchEnabled(true);
 
         return true;
     },
