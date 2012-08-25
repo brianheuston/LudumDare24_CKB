@@ -8,19 +8,15 @@ LivingObject.prototype = {
     fileName: null,
     rect: null,
     sprite: null,
-    Stats: {
-        "Strength": "0",
-        "Agility":  "0",
-        "Will":     "0",
-        "Luck":     "0"
+    BaseStats: {
     },
-
-    CalculatedStats: {
-        "Health":   "0",
-        "Mana":     "0"
-    },
+    currentHealth:0,
+    currentMana:0,
     manaRegenRate:null, // TODO: Base mana regen rate on will or will + this?
-
+    
+    equipped:{},
+    inventory:[],
+    
     // Variables to make attacking more realistic
     attackTimeout:null,
     lastAttackTimestamp:null,
@@ -54,5 +50,28 @@ LivingObject.prototype = {
 
     GetSprite:function() {
         return this.sprite;
+    },
+    
+    CalculateStats:function() {
+      var ret = {};
+      for (var slot in this.equipped) {
+        var length = this.equipped[slot].statNames.length;
+        for (var i = 0; i < length; i++) {
+          var oldStat = ret[this.equipped[slot].statNames[i]] || 0;
+          ret[this.equipped[slot].statNames[i]] = oldStat + this.equipped[slot].statLevels[i];
+        }
+      }
+      
+      return ret;
+    },
+    
+    Equip:function(item) {
+      var oldItem = null;
+      if (this.equipped[item.slot]) {
+        oldItem = this.equipped[item.slot];
+      }
+      this.equipped[item.slot] = item
+      
+      return oldItem;
     }
 }
