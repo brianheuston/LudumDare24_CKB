@@ -1,6 +1,7 @@
 function RangedAttack(fileName, rect)
 {
-    Attack.call(this, fileName, rect);
+    var scale = 5;
+    Attack.call(this, "Resources/oryx_lofi/lofi_obj.png", new cc.Rect(0, 72 * scale, 8 * scale, 8 * scale));
 }
 
 RangedAttack.prototype = Object.create(new Attack(), {

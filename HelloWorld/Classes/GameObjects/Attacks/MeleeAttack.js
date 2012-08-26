@@ -1,6 +1,7 @@
 function MeleeAttack(fileName, rect)
 {
-    Attack.call(this, "Resources/oryx_lofi/lofi_obj.png", new cc.Rect(40, 24, 8, 8));
+    var scale = 5;
+    Attack.call(this, "Resources/oryx_lofi/lofi_obj.png", new cc.Rect(40 * scale, 24 * scale, 8 * scale, 8 * scale));
 }
 
 MeleeAttack.prototype = Object.create(new Attack(), {
