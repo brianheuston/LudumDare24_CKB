@@ -9,6 +9,10 @@ var GUI = cc.Layer.extend({
         
     },
 
+    GetScreenRatio: function() {
+        return screenRatio;
+    },
+
     SetPlayer: function(player) {
         this.player = player;
     },

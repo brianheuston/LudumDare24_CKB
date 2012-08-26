@@ -10,9 +10,12 @@ LivingObject.prototype = {
     sprite: null,
     currentHealth:0,
     currentMana:0,
+    maxHealth:0,
+    maxMana:0,
     baseStats: {},
     equipped:{},
     inventory:[],
+    physicsBody:null,
     
     layer: null, // The layer, so we can add attack animations
 
@@ -24,6 +27,13 @@ LivingObject.prototype = {
     {
         this.sprite = cc.Sprite.create(this.fileName, this.rect);
         this.layer = layer;
+
+        // TODO: Make these set based off of stats?
+        SetMaxHealth(100);
+        SetMaxMana(100);
+        
+        ChangeHealth(100, true);
+        ChangeMana(100, true);
     },
 
     // To change the facing direction, you should call this. It will flip the sprite accordingly. 
@@ -34,21 +44,35 @@ LivingObject.prototype = {
     },
 
     ChangeHealth:function(value, isIncrease) {
-        this.CalculatedStats["Health"] += isIncrease ? value : -value;   
+        this.currentHealth += isIncrease ? value : -value;   
+        this.currentHealth = this.currentHealth > this.maxHealth ? this.maxHealth : this.currentHealth;
     },
 
     ChangeMana:function(value, isIncrease) {
-        this.CalculatedStats["Mana"] += isIncrease ? value : -value;
+        this.currentMana += isIncrease ? value : -value;
+        this.currentMana = this.currentMana > this.maxMana ? this.maxMana : this.currentMana;
     },
 
     GetHealth:function() {
-        return CalculatedStats.Health;
+        return this.currentHealth;
+    },
+
+    GetMana:function() {
+        return this.currentMana;
+    },
+
+    SetMaxHealth: function(maxHealth) {
+        this.maxHealth = maxHealth;
+    },
+
+    SetMaxMana: function(maxMana) {
+        this.maxMana = maxMana;
     },
 
     GetSprite:function() {
         return this.sprite;
     },
-    physicsBody:null,
+
     SetBody:function(body){
 	    this.physicsBody = body;
     },
