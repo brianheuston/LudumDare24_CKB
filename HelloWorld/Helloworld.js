@@ -87,7 +87,7 @@ var Helloworld = cc.Layer.extend({
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
         this.map = new Box2DLayer();
-        this.map.screen = size;        
+        this.map.screen = this.size;        
         this.addChild(this.map);
         
         Map.init(this.map,this.scale);
@@ -95,11 +95,9 @@ var Helloworld = cc.Layer.extend({
 
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-<<<<<<< HEAD
-
         this.player.init(this);
         this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
-        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true));
+        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true,true));
         //this.player.SetLocation(cc.ccp(this.size.width / 2, this.size.height / 2));
 
         playerBody = this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true);
@@ -109,12 +107,6 @@ var Helloworld = cc.Layer.extend({
         this.gui.Initialize(this.player, this.size);
         this.addChild(this.gui);
 
-=======
-        this.player.init();
-        this.player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true,true));
-//        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
->>>>>>> Map follows player now
         return true;
     },
 
