@@ -32,6 +32,7 @@ cc.loadjs('Classes/GameObjects/Player.js');
 cc.loadjs('Classes/GameObjects/Attacks/Attack.js');
 cc.loadjs('Classes/GameObjects/Attacks/RangedAttack.js');
 cc.loadjs('Classes/GameObjects/Attacks/MeleeAttack.js');
+cc.loadjs('Classes/GUI.js');
 
 var Helloworld = cc.Layer.extend({
     isMouseDown:false,
@@ -44,6 +45,7 @@ var Helloworld = cc.Layer.extend({
     scale:5,
     centerPos:null,
     player:null,
+    gui:null,
 
     init:function () { 
 
@@ -57,8 +59,8 @@ var Helloworld = cc.Layer.extend({
         // 2. add a menu item with "X" image, which is clicked to quit the program
         //    you may modify it.
         // ask director the window size
-        size = cc.Director.sharedDirector().getWinSize();
-        centerPos = cc.ccp(size.width / 2, size.height / 2);
+        this.size = cc.Director.sharedDirector().getWinSize();
+        centerPos = cc.ccp(this.size.width / 2, this.size.height / 2);
 
         // add a "close" icon to exit the progress. it's an autorelease object
         /*var closeItem = cc.MenuItemImage.create(
@@ -92,10 +94,20 @@ var Helloworld = cc.Layer.extend({
 
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-        this.player.init();
-        this.player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+
+        this.player.init(this);
+        this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
         this.player.SetBody(this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true));
-//        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
+        //this.player.SetLocation(cc.ccp(this.size.width / 2, this.size.height / 2));
+
+        playerBody = this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true);
+        playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
+
+        this.gui = new GUI();
+        this.gui.SetScreenSize(this.size);
+        this.gui.SetPlayer(this.player);
+        //this.addChild(this.gui);
+
         return true;
     },
 
