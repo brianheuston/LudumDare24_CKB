@@ -97,11 +97,7 @@ Map = new Object({
         			[5,8,8,6],
         			[0,4,4,2]];
         
-        var map = {
-          grid: mapGenerator.generate(30, 40),
-          x: 40,
-          y: 30
-        }
+        var map = mapGenerator.generate(30, 40);
         
         this.loadWorld(layer, map, 0, 0, 0, 0);
     },
