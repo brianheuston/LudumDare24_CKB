@@ -1,7 +1,7 @@
 function RangedAttack(fileName, rect)
 {
     var scale = 5;
-    Attack.call(this, "Resources/oryx_lofi/lofi_obj.png", new cc.Rect(0, 72 * scale, 8 * scale, 8 * scale));
+    Attack.call(this, new cc.Rect(0, 72 * scale, 8 * scale, 8 * scale));
 }
 
 RangedAttack.prototype = Object.create(new Attack(), {
@@ -14,7 +14,7 @@ RangedAttack.prototype = Object.create(new Attack(), {
 
         // Add the child and set the delta. By setting the delta, we set
         // movement.
-        layer.addChild(this.GetSprite());
+        layer.addChild(this.GetSprite(), ATTACK_ZINDEX);
         this.SetDelta(cc.ccp(bulletData["normalized"].x * 5, bulletData["normalized"].y * 5));
     } },
 

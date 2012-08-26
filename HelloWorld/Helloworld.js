@@ -97,6 +97,7 @@ var Helloworld = cc.Layer.extend({
         Map.init(this.map,this.scale);
         cc.KeypadHandler.create(this);
         LivingObjectSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_char.png");
+        AttackSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_obj.png");
         this.player = new Player( 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
 

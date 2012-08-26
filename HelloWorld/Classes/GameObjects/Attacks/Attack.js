@@ -1,11 +1,12 @@
-function Attack(fileName, rect)
+var ATTACK_ZINDEX = 3;
+var AttackSpriteBatch = null;
+
+function Attack(rect)
 {
-    this.fileName = fileName;
     this.rect = rect;
 }
 
 Attack.prototype = {
-    fileName: null,
     rect: null,
     sprite: null,
     Stats: {
@@ -17,7 +18,7 @@ Attack.prototype = {
 
     init:function()
     {
-        this.sprite = cc.Sprite.create(this.fileName, this.rect);
+        this.sprite = cc.Sprite.createWithBatchNode(AttackSpriteBatch, this.rect);
     },
 
     GetSprite:function() {

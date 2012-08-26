@@ -14,7 +14,7 @@ MeleeAttack.prototype = Object.create(new Attack(), {
 
         // Add the child and set the delta. By setting the delta, we set
         // movement.
-        layer.addChild(this.GetSprite());
+        layer.addChild(this.GetSprite(), ATTACK_ZINDEX);
 
         // Now, create a series of actions that do the following:
         // - Wait for half a second
