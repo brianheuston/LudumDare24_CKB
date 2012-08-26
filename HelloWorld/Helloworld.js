@@ -122,26 +122,20 @@ var Helloworld = cc.Layer.extend({
         this.player.LaunchAttack(touchLoc);
     },
     keyUp:function(e){
-    	var vel = this.player.GetBody().GetLinearVelocity();
-    	var x = vel.x,y=vel.y;
-    	if(e == 68){if(vel.x> 0){x = 0;}}
-    	if(e == 83){if(vel.y< 0){y= 0;}}    	
-    	if(e == 65){if(vel.x< 0){x = 0;}}
-    	if(e == 87){if(vel.y> 0){y = 0;}}
+    	if(e == 68){this.map.right = false;}
+    	if(e == 83){this.map.down = false;}    	
+    	if(e == 65){this.map.left = false;}
+    	if(e == 87){this.map.up = false;}
     	
-        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(x, y));
 //        this.player.GetBody().SetAngularVelocity(new Box2D.Common.Math.b2Vec2(0, 0));
 
     },
     keyDown:function(e){
-    	var vel = this.player.GetBody().GetLinearVelocity();
-    	var x = vel.x,y=vel.y,VELX = 5,VELY=5;
-    	if(e == 68){x = VELX;}
-    	if(e == 83){y=-VELY;}    	
-    	if(e == 65){x = -VELX;}
-    	if(e == 87){y = VELY;}
+    	if(e == 68){this.map.right = true;}
+    	if(e == 83){this.map.down = true;}    	
+    	if(e == 65){this.map.left = true;}
+    	if(e == 87){this.map.up = true;}
     	
-        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(x, y));
 
     }
 });

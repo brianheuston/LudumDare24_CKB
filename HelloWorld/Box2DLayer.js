@@ -7,6 +7,10 @@ var Box2DLayer = cc.Layer.extend({
     screen:null,
     uiYPercentage:null,
     size:null,
+    left:false,
+    right:false,
+    up:false,
+    down:false,
     //GLESDebugDraw *m_debugDraw;
 
 
@@ -61,7 +65,7 @@ var Box2DLayer = cc.Layer.extend({
         var body = this.world.CreateBody(bodyDef);
         // Define another box shape for our dynamic body.
         var dynamicBox = new b2PolygonShape();
-        dynamicBox.SetAsBox(40/PTM_RATIO/2, 40/PTM_RATIO/2);//These are mid points for our 1m box
+        dynamicBox.SetAsBox(35/PTM_RATIO/2, 35/PTM_RATIO/2);//These are mid points for our 1m box
 
         // Define the dynamic body fixture.
         var fixtureDef = new b2FixtureDef();        
@@ -77,6 +81,15 @@ var Box2DLayer = cc.Layer.extend({
     moveMap:function(sprite){
 	    this.setPosition(cc.ccp(this.screen.width/2-sprite.GetPosition().x*PTM_RATIO,
 	    	this.screen.height*(1+this.uiYPercentage)/2-sprite.GetPosition().y*PTM_RATIO));
+    },
+    keys:function(player){
+    	var vel = player.GetLinearVelocity();
+    	var x = 0,y=0,VELX = 5,VELY=5;
+    	if(this.right){x += VELX;}
+    	if(this.down){y+=-VELY;}    	
+    	if(this.left){x += -VELX;}
+    	if(this.up){y += VELY;}    	
+        player.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(x, y));
     },
     update:function (dt) {
         //It is recommended that a fixed time step is used with Box2D for stability
@@ -98,6 +111,7 @@ var Box2DLayer = cc.Layer.extend({
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
                 var userData = b.GetUserData();
                 if(userData.person){
+	                this.keys(b);
 	                this.moveMap(b);
                 }
                 userData.sprite.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
