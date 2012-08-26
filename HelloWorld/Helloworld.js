@@ -96,7 +96,7 @@ var Helloworld = cc.Layer.extend({
 
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-        this.player.init(this);
+        this.player.init(this.map);
         this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
         this.player.SetBody(this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true,true));
         //this.player.SetLocation(cc.ccp(this.size.width / 2, this.size.height / 2));
