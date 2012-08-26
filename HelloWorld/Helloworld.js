@@ -97,7 +97,7 @@ var Helloworld = cc.Layer.extend({
 
         this.player.init(this);
         this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
-        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true));
+        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true));
         //this.player.SetLocation(cc.ccp(this.size.width / 2, this.size.height / 2));
 
         playerBody = this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true);
