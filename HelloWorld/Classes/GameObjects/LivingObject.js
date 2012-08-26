@@ -14,6 +14,8 @@ LivingObject.prototype = {
     baseStats: {},
     equipped:{},
     inventory:[],
+    time:0,
+    update:1,
     physicsBody:null,
     
     layer: null, // The layer, so we can add attack animations
@@ -115,4 +117,10 @@ LivingObject.prototype = {
     GetLocation: { value: function() {
         return this.playerLocation;
     } },
+    update:{value:function(dt){
+	    this.time += dt;
+	    if(time > this.update){
+		    this.getBody().SetLinearVelocity(Math.Random(),Math.Random());
+	    }
+    }},
 }

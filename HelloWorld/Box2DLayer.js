@@ -46,7 +46,13 @@ var Box2DLayer = cc.Layer.extend({
 
 
     },
-    addSprite:function(sprite,x,y,z,dynamic,person){	    
+    addUpdatableSprite:function(sprite,x,y,z,dynamic,person,living){
+    	return this.realAddSprite(sprite,x,y,z,dynamic,person,living,true);
+    },
+    addSprite:function(sprite,x,y,z,dynamic,person){	
+    	return this.realAddSprite(sprite,x,y,z,dynamic,person,null,false);
+    },
+    realAddSprite:function(sprite,x,y,z,dynamic,person,living,update){	    
         var b2BodyDef = Box2D.Dynamics.b2BodyDef
             , b2Body = Box2D.Dynamics.b2Body
             , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
@@ -59,7 +65,9 @@ var Box2DLayer = cc.Layer.extend({
         bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
         bodyDef.userData = new Object({
 	        	sprite:sprite,
-	        	person:person
+	        	person:person,
+	        	update:update,
+	        	living:living
 	        })
         bodyDef.fixedRotation = true;
         var body = this.world.CreateBody(bodyDef);
@@ -106,6 +114,7 @@ var Box2DLayer = cc.Layer.extend({
 
         //Iterate over the bodies in the physics world
         var userData;
+        var sprite;
         for (var b = this.world.GetBodyList(); b; b = b.GetNext()) {
             if (b.GetUserData() != null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
@@ -114,12 +123,15 @@ var Box2DLayer = cc.Layer.extend({
 	                this.keys(b);
 	                this.moveMap(b);
                 }
+                if(userData.update){
+	                //userData.living.update(dt);
+                }
                 userData.sprite.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
                 userData.sprite.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
                 //console.log(b.GetAngle());
             }
         }
 
-    }
+    },
 
 });

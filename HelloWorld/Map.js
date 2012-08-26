@@ -37,6 +37,7 @@ Map = new Object({
     start:null,
     layer:null,
     size:null,
+    enemyChance:.05,
     loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ) {
     	var worldInNumbers =   mapPiece.grid;
 		var i = 0;
@@ -56,9 +57,16 @@ Map = new Object({
 				if(tile.overlay > -1){
 			        this.addToScreen(MapTile[tile.overlay].X,MapTile[tile.overlay].Y,x,y,i,j,mapPiece,layer,MapTile[tile.overlay].block&&tile.block);					
 				}
+				else{
+			        if(Math.random() < this.enemyChance){						        
+				        this.enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
+				        this.enemies.init(layer);
+				        this.enemies.GetSprite().setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i ));
+				        this.enemies.SetBody(layer.addUpdatableSprite(this.enemies.GetSprite(),x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i,2,true,false, this.enemies));
+			        }
+					
+				}
 		        this.addToScreen(tile.X,tile.Y,x,y,i,j,mapPiece,layer,tile.block);
-		        
-		        
 		        
 			}
 		}
@@ -109,9 +117,10 @@ Map = new Object({
         				this.player.GetSprite(),
         				(this.start[1] + 2)*PTM_RATIO,
         				(this.world.length -  (this.start[0] + 1))*PTM_RATIO,
-        				2,
+        				4,
         				true,
-        				true));
+        				true
+        				));
 		this.layer.moveMap(this.player.GetBody());
     },
     update:function(){

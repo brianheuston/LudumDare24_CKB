@@ -88,6 +88,7 @@ var Helloworld = cc.Layer.extend({
         this.helloLabel.setPosition(cc.ccp(size.width / 2, size.height - 40));
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
+        LivingObjectSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_char.png");
         this.map = new Box2DLayer();
         this.map.screen = this.size;    
         this.map.uiYPercentage = .25;    
@@ -98,6 +99,7 @@ var Helloworld = cc.Layer.extend({
         cc.KeypadHandler.create(this);
         LivingObjectSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_char.png");
         AttackSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_obj.png");
+
         this.player = new Player( 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
 
@@ -105,10 +107,6 @@ var Helloworld = cc.Layer.extend({
         this.player.init(this.map);
         Map.addPlayer(this.player);
 
-        this.enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
-        this.enemies.init(this);
-        this.enemies.GetSprite().setPosition(cc.ccp(this.size.width , this.size.height ));
-        this.enemies.SetBody(this.map.addSprite(this.enemies.GetSprite(),this.size.width,this.size.height,2,true,false));
 
 
 
