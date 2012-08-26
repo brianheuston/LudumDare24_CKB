@@ -107,8 +107,8 @@ Map = new Object({
     	this.player = play;
         this.player.SetBody(this.layer.addSprite(
         				this.player.GetSprite(),
-        				this.start[1]*PTM_RATIO,
-        				(this.world.length-this.start[0])*PTM_RATIO,
+        				(this.start[1] + 2)*PTM_RATIO,
+        				(this.world.length -  (this.start[0] + 1))*PTM_RATIO,
         				2,
         				true,
         				true));

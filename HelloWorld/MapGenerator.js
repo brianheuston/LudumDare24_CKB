@@ -43,7 +43,7 @@ var mapGenerator = function mapGenerator() {
     var groups = [];
     var connections = [];
     for (var i = 0; i < Math.max(width * height / 40, 2); i++) {
-      points.push([Math.floor(Math.random() * width), Math.floor(Math.random() * height)]);
+      points.push([Math.floor(Math.random() * (width - 1)), Math.floor(Math.random() * (height - 1))]);
       groups.push([points[i]]);
     }
     
