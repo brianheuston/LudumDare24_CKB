@@ -104,9 +104,8 @@ var Helloworld = cc.Layer.extend({
         playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
 
         this.gui = new GUI();
-        this.gui.SetScreenSize(this.size);
-        this.gui.SetPlayer(this.player);
-        //this.addChild(this.gui);
+        this.gui.Initialize(this.player, this.size);
+        this.addChild(this.gui);
 
         return true;
     },
