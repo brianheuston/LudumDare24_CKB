@@ -73,7 +73,7 @@ var Box2DLayer = cc.Layer.extend({
         //You need to make an informed choice, the following URL is useful
         //http://gafferongames.com/game-physics/fix-your-timestep/
 
-        var velocityIterations = 1;
+        var velocityIterations = 8;
         var positionIterations = 1;
 
         // Instruct the world to perform a single step of simulation. It is

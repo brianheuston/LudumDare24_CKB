@@ -92,15 +92,10 @@ var Helloworld = cc.Layer.extend({
 
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-        this.player.init(this);
+        this.player.init();
         this.player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.player.SetLocation(cc.ccp(size.width / 2, size.height / 2));
-        //this.addChild(this.player.GetSprite());
-        //this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2);
-
-        playerBody = this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true);
-        playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
-
+        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true));
+        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
         return true;
     },
 
@@ -115,9 +110,24 @@ var Helloworld = cc.Layer.extend({
         this.player.LaunchAttack(touchLoc);
     },
     keyUp:function(e){
+    	var vel = this.player.GetBody().GetLinearVelocity();
+    	var x = vel.x,y=vel.y;
+    	if(e == 68||e == 65){x = 0;}
+    	if(e == 83 || e == 85){y=0;}
+    	
+        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(x, y));
+//        this.player.GetBody().SetAngularVelocity(new Box2D.Common.Math.b2Vec2(0, 0));
 
     },
     keyDown:function(e){
+    	var vel = this.player.GetBody().GetLinearVelocity();
+    	var x = vel.x,y=vel.y,VELX = 1,VELY=1;
+    	if(e == 68){x = VELX;}
+    	if(e == 83){y=VELY;}    	
+    	if(e == 65){x = -VELX;}
+    	if(e == 85){y = -VELY;}
+    	
+        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(x, y));
 
     }
 });

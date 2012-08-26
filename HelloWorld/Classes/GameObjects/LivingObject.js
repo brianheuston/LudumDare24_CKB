@@ -48,7 +48,13 @@ LivingObject.prototype = {
     GetSprite:function() {
         return this.sprite;
     },
-    
+    physicsBody:null,
+    SetBody:function(body){
+	    this.physicsBody = body;
+    },
+    GetBody:function(){
+	    return this.physicsBody;
+    },
     CalculateStats:function() {
       var ret = {};
       for (var statName in baseStats) {
