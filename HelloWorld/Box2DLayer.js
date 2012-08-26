@@ -23,7 +23,7 @@ var Box2DLayer = cc.Layer.extend({
 
 
         // Construct a world object, which will hold and simulate the rigid bodies.
-        this.world = new b2World(new b2Vec2(0, 0), true);
+        this.world = new b2World(new b2Vec2(0, 0), false);
 //        this.world.SetContinuousPhysics(true);
 
         // Define the ground body.
