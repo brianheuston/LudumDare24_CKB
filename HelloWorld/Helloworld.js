@@ -29,8 +29,9 @@ cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
 cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
-
-
+cc.loadjs('Classes/GameObjects/Attacks/Attack.js');
+cc.loadjs('Classes/GameObjects/Attacks/RangedAttack.js');
+cc.loadjs('Classes/GameObjects/Attacks/MeleeAttack.js');
 
 var Helloworld = cc.Layer.extend({
     isMouseDown:false,
@@ -88,30 +89,30 @@ var Helloworld = cc.Layer.extend({
         
         Map.init(this.map,this.scale);
         cc.KeypadHandler.create(this);
-        //var explosion = cc.ParticleFire.create();
-        //this.addChild(explosion);
 
-        player = new Player("Resources/oryx_lofi/lofi_char.png", 
+        this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-        player.init();
-        player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.player.init(this);
+        this.player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.player.SetLocation(cc.ccp(size.width / 2, size.height / 2));
+        //this.addChild(this.player.GetSprite());
+        //this.map.addSprite(player.GetSprite(),size.width/2,size.height/2,2);
+
         playerBody = this.map.addSprite(player.GetSprite(),size.width/2,size.height/2,2,true);
         playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
+
         return true;
     },
 
     ccTouchesEnded:function(touches, event) {
-        /*if (touches.length <= 0)
+        if (touches.length <= 0)
             return;
 
         var touch = touches[0];
 
-        var location = touch.locationInView(touch.view());
+        var touchLoc = touch.locationInView(touch.view());
 
-        var moveDelta = cc.ccp((location.x - centerPos.x),
-                               (location.y - centerPos.y));
-        this.map.setPosition(cc.ccp(this.map.getPosition().x - moveDelta.x,
-                                    this.map.getPosition().y - moveDelta.y));*/
+        this.player.LaunchAttack(touchLoc);
     },
     keyUp:function(e){
 

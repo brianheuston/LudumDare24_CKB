@@ -8,20 +8,22 @@ LivingObject.prototype = {
     fileName: null,
     rect: null,
     sprite: null,
-    
     currentHealth:0,
     currentMana:0,
     baseStats: {},
     equipped:{},
     inventory:[],
     
+    layer: null, // The layer, so we can add attack animations
+
     // Variables to make attacking more realistic
     attackTimeout:null,
     lastAttackTimestamp:null,
 
-    init:function(fileName, rect)
+    init:function(layer)
     {
         this.sprite = cc.Sprite.create(this.fileName, this.rect);
+        this.layer = layer;
     },
 
     // To change the facing direction, you should call this. It will flip the sprite accordingly. 
@@ -39,9 +41,6 @@ LivingObject.prototype = {
         this.CalculatedStats["Mana"] += isIncrease ? value : -value;
     },
 
-    Attack:function() {
-    },
-    
     GetHealth:function() {
         return CalculatedStats.Health;
     },

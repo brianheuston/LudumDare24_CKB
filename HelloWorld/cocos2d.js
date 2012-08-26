@@ -75,7 +75,9 @@ cc.loadjs = function (filename) {
             };
             //preload ressources
             cc.Loader.shareLoader().preload([
-                {type:"image", src:"Resources/oryx_lofi/lofi_environment.png"}
+                {type:"image", src:"Resources/oryx_lofi/lofi_environment.png"},
+                {type:"image", src:"Resources/oryx_lofi/lofi_char.png"},
+                {type:"image", src:"Resources/oryx_lofi/lofi_obj.png"}
             ]);
         }
     };
