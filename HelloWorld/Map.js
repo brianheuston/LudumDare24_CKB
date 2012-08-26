@@ -23,6 +23,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+cc.loadjs('MapGenerator.js');
 cc.loadjs('MapPieces.js');
 cc.loadjs('MapTile.js');
 Map = new Object({
@@ -32,7 +33,7 @@ Map = new Object({
     HEIGHT:8,
     sprites:null,
     scale:1,
-    loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ){
+    loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ) {
     	var worldInNumbers =   mapPiece.grid;
 		var i = 0;
 		var j = 0;
@@ -89,18 +90,20 @@ Map = new Object({
 //        this.setKeyboardEnabled(true);
         this.scale = scale;
         this.HEIGHT *= scale;
-        this.WIDTH *=scale;
+        this.WIDTH *= scale;
         layer.addChild(this.sprites,0,99);
-        var largePieces = [[1,7,7,3],
+        var largePieces = 
+             [[1,7,7,3],
         			[5,8,8,6],
         			[0,4,4,2]];
-        			
-		for(i = 0; i < 3;i++){					
-			for(j = 0; j <4; j++){
-				this.loadWorld(layer,MapPieces[largePieces[i][j]],10*j*this.WIDTH,10*i*this.HEIGHT,i*10,j*10);
-			}
-		}        			        
         
+        var map = {
+          grid: mapGenerator.generate(30, 40),
+          x: 40,
+          y: 30
+        }
+        
+        this.loadWorld(layer, map, 0, 0, 0, 0);
     },
     move:function(x,y){
 	    
