@@ -5,6 +5,7 @@ var Box2DLayer = cc.Layer.extend({
 
     world:null,
     screen:null,
+    uiYPercentage:null,
     size:null,
     //GLESDebugDraw *m_debugDraw;
 
@@ -74,8 +75,8 @@ var Box2DLayer = cc.Layer.extend({
  
     },
     moveMap:function(sprite){
-	    this.setPosition(cc.ccp(400-sprite.GetPosition().x*PTM_RATIO,
-	    	300-sprite.GetPosition().y*PTM_RATIO));
+	    this.setPosition(cc.ccp(this.screen.width/2-sprite.GetPosition().x*PTM_RATIO,
+	    	this.screen.height*(1+this.uiYPercentage)/2-sprite.GetPosition().y*PTM_RATIO));
     },
     update:function (dt) {
         //It is recommended that a fixed time step is used with Box2D for stability

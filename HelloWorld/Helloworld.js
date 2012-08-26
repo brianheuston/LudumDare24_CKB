@@ -87,7 +87,8 @@ var Helloworld = cc.Layer.extend({
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
         this.map = new Box2DLayer();
-        this.map.screen = this.size;        
+        this.map.screen = this.size;    
+        this.map.uiYPercentage = .25;    
         this.addChild(this.map);
         
         Map.init(this.map,this.scale);
