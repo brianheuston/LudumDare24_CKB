@@ -25,7 +25,7 @@ Player.prototype = Object.create(new LivingObject(), {
     
     // TODO: Determine ranged or melee attack. Right now, this assumes ranged.
     LaunchAttack: {value: function(target) {
-        var attack = new MeleeAttack();
+        var attack = new RangedAttack();
         attack.init();
 
         attack.Launch(target, this.GetSprite().getPosition(), this.layer);

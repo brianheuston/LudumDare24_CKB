@@ -29,11 +29,11 @@ LivingObject.prototype = {
         this.layer = layer;
 
         // TODO: Make these set based off of stats?
-        SetMaxHealth(100);
-        SetMaxMana(100);
+        this.SetMaxHealth(100);
+        this.SetMaxMana(100);
         
-        ChangeHealth(100, true);
-        ChangeMana(100, true);
+        this.ChangeHealth(100, true);
+        this.ChangeMana(100, true);
     },
 
     // To change the facing direction, you should call this. It will flip the sprite accordingly. 
