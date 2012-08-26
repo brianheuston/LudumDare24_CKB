@@ -4,6 +4,8 @@ var PTM_RATIO = 40;
 var Box2DLayer = cc.Layer.extend({
 
     world:null,
+    screen:null,
+    size:null,
     //GLESDebugDraw *m_debugDraw;
 
 
@@ -34,12 +36,12 @@ var Box2DLayer = cc.Layer.extend({
         // from a pool and creates the ground box shape (also from a pool).
         // The body is also added to the world.
         //var groundBody = this.world.CreateBody(groundBodyDef);
-
+        
         this.scheduleUpdate();
 
 
     },
-    addSprite:function(sprite,x,y,z,dynamic){	    
+    addSprite:function(sprite,x,y,z,dynamic,person){	    
         var b2BodyDef = Box2D.Dynamics.b2BodyDef
             , b2Body = Box2D.Dynamics.b2Body
             , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
@@ -50,7 +52,11 @@ var Box2DLayer = cc.Layer.extend({
 	        bodyDef.type = b2Body.b2_dynamicBody;
 	    }
         bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
-        bodyDef.userData = sprite;
+        bodyDef.userData = new Object({
+	        	sprite:sprite,
+	        	person:person
+	        })
+        bodyDef.fixedRotation = true;
         var body = this.world.CreateBody(bodyDef);
         // Define another box shape for our dynamic body.
         var dynamicBox = new b2PolygonShape();
@@ -67,26 +73,34 @@ var Box2DLayer = cc.Layer.extend({
         return body;
  
     },
+    moveMap:function(sprite){
+	    this.setPosition(cc.ccp(400-sprite.GetPosition().x*PTM_RATIO,
+	    	300-sprite.GetPosition().y*PTM_RATIO));
+    },
     update:function (dt) {
         //It is recommended that a fixed time step is used with Box2D for stability
         //of the simulation, however, we are using a variable time step here.
         //You need to make an informed choice, the following URL is useful
         //http://gafferongames.com/game-physics/fix-your-timestep/
 
-        var velocityIterations = 8;
-        var positionIterations = 1;
+        var velocityIterations = dt/.01;
+        var positionIterations = dt/.01;
 
         // Instruct the world to perform a single step of simulation. It is
         // generally best to keep the time step and iterations fixed.
         this.world.Step(dt, velocityIterations, positionIterations);
 
         //Iterate over the bodies in the physics world
+        var userData;
         for (var b = this.world.GetBodyList(); b; b = b.GetNext()) {
             if (b.GetUserData() != null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
-                var myActor = b.GetUserData();
-                myActor.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
-                myActor.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
+                var userData = b.GetUserData();
+                if(userData.person){
+	                this.moveMap(b);
+                }
+                userData.sprite.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
+                userData.sprite.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));
                 //console.log(b.GetAngle());
             }
         }

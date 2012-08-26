@@ -87,6 +87,7 @@ var Helloworld = cc.Layer.extend({
         // add the label as a child to this layer
         this.addChild(this.helloLabel, 5);*/
         this.map = new Box2DLayer();
+        this.map.screen = size;        
         this.addChild(this.map);
         
         Map.init(this.map,this.scale);
@@ -94,6 +95,7 @@ var Helloworld = cc.Layer.extend({
 
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
+<<<<<<< HEAD
 
         this.player.init(this);
         this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
@@ -107,6 +109,12 @@ var Helloworld = cc.Layer.extend({
         this.gui.Initialize(this.player, this.size);
         this.addChild(this.gui);
 
+=======
+        this.player.init();
+        this.player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
+        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),size.width/2,size.height/2,2,true,true));
+//        this.player.GetBody().SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
+>>>>>>> Map follows player now
         return true;
     },
 
@@ -134,7 +142,7 @@ var Helloworld = cc.Layer.extend({
     },
     keyDown:function(e){
     	var vel = this.player.GetBody().GetLinearVelocity();
-    	var x = vel.x,y=vel.y,VELX = 3,VELY=3;
+    	var x = vel.x,y=vel.y,VELX = 5,VELY=5;
     	if(e == 68){x = VELX;}
     	if(e == 83){y=-VELY;}    	
     	if(e == 65){x = -VELX;}

@@ -68,7 +68,8 @@ Map = new Object({
 	        layer.addSprite(this.world[i][j],
 	        x+this.WIDTH*j+this.WIDTH/2,
 	        y+this.HEIGHT*mapPiece.y-this.HEIGHT*i+this.HEIGHT/2,
-	         0,
+	         1,
+	         false,
 	         false);
 	    }
 	    else{
