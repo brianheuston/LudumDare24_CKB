@@ -1,5 +1,5 @@
-function Player(fileName, rect) {
-    LivingObject.call(this, fileName, rect);
+function Player(rect) {
+    LivingObject.call(this, rect);
 }
 
 Player.prototype = Object.create(new LivingObject(), {
@@ -10,17 +10,6 @@ Player.prototype = Object.create(new LivingObject(), {
         "Defense":          "0",
         "Health":           "0",
         "Mana":             "0"
-    } },
-
-    playerLocation: { value: null },
-
-    /* Returns the center point of the object in pixels */
-    SetLocation: { value: function(playerLocation) {
-        this.playerLocation = playerLocation;
-    } },
-
-    GetLocation: { value: function() {
-        return this.playerLocation;
     } },
     
     // TODO: Determine ranged or melee attack. Right now, this assumes ranged.

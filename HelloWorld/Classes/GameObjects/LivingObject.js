@@ -1,10 +1,9 @@
-function LivingObject(fileName, rect)
+function LivingObject(rect)
 {
-    this.fileName = fileName;
     this.rect = rect;
 }
-
-LivingObject.prototype = {
+LivingObjectSpriteBatch = null;
+LivingObject.prototype = {	
     fileName: null,
     rect: null,
     sprite: null,
@@ -25,7 +24,7 @@ LivingObject.prototype = {
 
     init:function(layer)
     {
-        this.sprite = cc.Sprite.create(this.fileName, this.rect);
+        this.sprite = cc.Sprite.createWithBatchNode(LivingObjectSpriteBatch, this.rect);
         this.layer = layer;
 
         // TODO: Make these set based off of stats?

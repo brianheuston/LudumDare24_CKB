@@ -6,13 +6,23 @@ var MapTile = [
 		X:2,
 		Y:4,
 		block:false,
-		overlay:-1
+		overlay:-1,
+		enemu:0
 	}), 
 	new Object({
 		X:9,
 		Y:4,
 		block:true,
 		overlay:0,
+		enemy:0
+		
+	}), 
+	new Object({
+		X:2,
+		Y:4,
+		block:false,
+		overlay:-1,
+		enemy:1
 		
 	})
 ]

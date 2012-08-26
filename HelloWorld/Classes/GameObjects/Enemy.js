@@ -1,5 +1,5 @@
-function Enemy(fileName, rect) {
-    LivingObject.call(this, fileName, rect);
+function Enemy(rect) {
+    LivingObject.call(this, rect);
 }
 
 Enemy.prototype = Object.create(new LivingObject(), {
