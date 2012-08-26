@@ -28,6 +28,6 @@ Player.prototype = Object.create(new LivingObject(), {
         var attack = new MeleeAttack();
         attack.init();
 
-        attack.Launch(target, this.playerLocation, this.layer);
+        attack.Launch(target, this.GetSprite().getPosition(), this.layer);
     } }
 })
