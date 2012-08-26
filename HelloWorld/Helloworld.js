@@ -29,6 +29,7 @@ cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
 cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
+cc.loadjs('Classes/GameObjects/Enemy.js');
 cc.loadjs('Classes/GameObjects/Attacks/Attack.js');
 cc.loadjs('Classes/GameObjects/Attacks/RangedAttack.js');
 cc.loadjs('Classes/GameObjects/Attacks/MeleeAttack.js');
@@ -45,6 +46,7 @@ var Helloworld = cc.Layer.extend({
     scale:5,
     centerPos:null,
     player:null,
+    enemies:null,
     gui:null,
 
     init:function () { 
@@ -90,19 +92,23 @@ var Helloworld = cc.Layer.extend({
         this.map.screen = this.size;    
         this.map.uiYPercentage = .25;    
         this.addChild(this.map);
-        
+        Map.size = this.size;
+        Map.scale = this.scale;
         Map.init(this.map,this.scale);
         cc.KeypadHandler.create(this);
-
         this.player = new Player("Resources/oryx_lofi/lofi_char.png", 
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
-        this.player.init(this.map);
-        this.player.GetSprite().setPosition(cc.ccp(this.size.width / 2, this.size.height / 2));
-        this.player.SetBody(this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true,true));
-        //this.player.SetLocation(cc.ccp(this.size.width / 2, this.size.height / 2));
 
-        playerBody = this.map.addSprite(this.player.GetSprite(),this.size.width/2,this.size.height/2,2,true);
-        playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
+        this.player.init(this.map);
+        Map.addPlayer(this.player);
+
+        this.enemies = new Enemy("Resources/oryx_lofi/lofi_char.png", 
+                            new cc.Rect(0, 9*PTM_RATIO, 8 * this.scale, 8 * this.scale));
+        this.enemies.init(this);
+        this.enemies.GetSprite().setPosition(cc.ccp(this.size.width , this.size.height ));
+        this.enemies.SetBody(this.map.addSprite(this.enemies.GetSprite(),this.size.width,this.size.height,2,true,false));
+
+
 
         this.gui = new GUI();
         this.gui.Initialize(this.player, this.size);
@@ -127,7 +133,6 @@ var Helloworld = cc.Layer.extend({
     	if(e == 65){this.map.left = false;}
     	if(e == 87){this.map.up = false;}
     	
-//        this.player.GetBody().SetAngularVelocity(new Box2D.Common.Math.b2Vec2(0, 0));
 
     },
     keyDown:function(e){

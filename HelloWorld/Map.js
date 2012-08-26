@@ -29,10 +29,14 @@ cc.loadjs('MapTile.js');
 Map = new Object({
     world:[],
     pieces:[],
+    player:null,
     WIDTH:8,
     HEIGHT:8,
     sprites:null,
-    scale:1,
+    scale:40,
+    start:null,
+    layer:null,
+    size:null,
     loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ) {
     	var worldInNumbers =   mapPiece.grid;
 		var i = 0;
@@ -92,14 +96,26 @@ Map = new Object({
         this.HEIGHT *= scale;
         this.WIDTH *= scale;
         layer.addChild(this.sprites,0,99);
-        var largePieces = 
-             [[1,7,7,3],
-        			[5,8,8,6],
-        			[0,4,4,2]];
         
         var map = mapGenerator.generate(30, 40);
-        
+        this.start = map.start;
         this.loadWorld(layer, map, 0, 0, 0, 0);
+        this.layer = layer;
+
+    },
+    addPlayer:function(play,layer){
+    	this.player = play;
+        this.player.SetBody(this.layer.addSprite(
+        				this.player.GetSprite(),
+        				this.start[1]*PTM_RATIO,
+        				(this.world.length-this.start[0])*PTM_RATIO,
+        				2,
+        				true,
+        				true));
+		this.layer.moveMap(this.player.GetBody());
+    },
+    update:function(){
+	    
     },
     move:function(x,y){
 	    

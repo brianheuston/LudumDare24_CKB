@@ -104,5 +104,16 @@ LivingObject.prototype = {
       this.equipped[item.slot] = item
       
       return oldItem;
-    }
+    },
+
+    playerLocation: { value: null },
+
+    /* Returns the center point of the object in pixels */
+    SetLocation: { value: function(playerLocation) {
+        this.playerLocation = playerLocation;
+    } },
+
+    GetLocation: { value: function() {
+        return this.playerLocation;
+    } },
 }

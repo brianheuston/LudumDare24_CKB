@@ -3,5 +3,6 @@ function Enemy(fileName, rect) {
 }
 
 Enemy.prototype = Object.create(new LivingObject(), {
-    loot: { value: null }
-}
+    loot: { value: null },
+    
+})
