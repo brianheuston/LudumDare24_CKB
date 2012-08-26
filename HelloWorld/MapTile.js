@@ -11,7 +11,7 @@ var MapTile = [
 	new Object({
 		X:9,
 		Y:4,
-		block:false,
+		block:true,
 		overlay:0,
 		
 	})

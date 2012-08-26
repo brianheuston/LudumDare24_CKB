@@ -39,14 +39,16 @@ var Box2DLayer = cc.Layer.extend({
 
 
     },
-    addSprite:function(sprite,x,y,z){	    
+    addSprite:function(sprite,x,y,z,dynamic){	    
         var b2BodyDef = Box2D.Dynamics.b2BodyDef
             , b2Body = Box2D.Dynamics.b2Body
             , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
             , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
         
         var bodyDef = new b2BodyDef();
-        bodyDef.type = b2Body.b2_dynamicBody;
+        if(dynamic){
+	        bodyDef.type = b2Body.b2_dynamicBody;
+	    }
         bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
         bodyDef.userData = sprite;
         var body = this.world.CreateBody(bodyDef);
@@ -55,13 +57,14 @@ var Box2DLayer = cc.Layer.extend({
         dynamicBox.SetAsBox(40/PTM_RATIO/2, 40/PTM_RATIO/2);//These are mid points for our 1m box
 
         // Define the dynamic body fixture.
-        var fixtureDef = new b2FixtureDef();
+        var fixtureDef = new b2FixtureDef();        
         fixtureDef.shape = dynamicBox;
         fixtureDef.density = 1.0;
         fixtureDef.sensor = true;
         body.CreateFixture(fixtureDef);
 //        body.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(1, 0));
         this.addChild(sprite,z);
+        return body;
  
     },
     update:function (dt) {

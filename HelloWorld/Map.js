@@ -49,9 +49,9 @@ Map = new Object({
 				tile = MapTile[worldInNumbers[i][j]];
 				this.pieces[pieceY+i][pieceX+j] = worldInNumbers[i][j];
 				if(tile.overlay > -1){
-			        this.addToScreen(MapTile[tile.overlay].X,MapTile[tile.overlay].Y,x,y,i,j,mapPiece,layer);					
+			        this.addToScreen(MapTile[tile.overlay].X,MapTile[tile.overlay].Y,x,y,i,j,mapPiece,layer,MapTile[tile.overlay].block&&tile.block);					
 				}
-		        this.addToScreen(tile.X,tile.Y,x,y,i,j,mapPiece,layer);
+		        this.addToScreen(tile.X,tile.Y,x,y,i,j,mapPiece,layer,tile.block);
 		        
 		        
 		        
@@ -59,12 +59,21 @@ Map = new Object({
 		}
 	    
     },
-    addToScreen:function(X,Y,x,y,i,j,mapPiece,layer){
+    addToScreen:function(X,Y,x,y,i,j,mapPiece,layer,opaque){
 		this.world[i][j] = cc.Sprite.createWithBatchNode(this.sprites,new cc.Rect(X*this.WIDTH,Y*this.HEIGHT,this.WIDTH,this.HEIGHT));
         this.world[i][j].setAnchorPoint(cc.ccp(0.5, 0.5));
 //		        this.world[i][j].setScale(2);
         this.world[i][j].setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i));		
-        layer.addChild(this.world[i][j], 0);
+        if(opaque == 1){
+	        layer.addSprite(this.world[i][j],
+	        x+this.WIDTH*j+this.WIDTH/2,
+	        y+this.HEIGHT*mapPiece.y-this.HEIGHT*i+this.HEIGHT/2,
+	         0,
+	         false);
+	    }
+	    else{
+	        layer.addChild(this.world[i][j], 0);
+        }
 	    
     },
 

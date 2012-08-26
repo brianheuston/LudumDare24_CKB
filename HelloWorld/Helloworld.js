@@ -95,7 +95,8 @@ var Helloworld = cc.Layer.extend({
                             new cc.Rect(0, 0, 8 * this.scale, 8 * this.scale));
         player.init();
         player.GetSprite().setPosition(cc.ccp(size.width / 2, size.height / 2));
-        this.map.addSprite(player.GetSprite(),size.width/2,size.height/2,2);
+        playerBody = this.map.addSprite(player.GetSprite(),size.width/2,size.height/2,2,true);
+        playerBody.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(-1, 0));
         return true;
     },
 
