@@ -92,4 +92,4 @@ cc.loadjs('../lib/Cocos2d-html5-canvasmenu-min.js');
 
 // User files
 cc.loadjs('Classes/AppDelegate.js');//17
-cc.loadjs('Helloworld.js');//19
+cc.loadjs('TitleScreen.js');//19
