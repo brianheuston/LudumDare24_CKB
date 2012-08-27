@@ -25,6 +25,7 @@
  ****************************************************************************/
 
 cc.loadjs('../box2d/box2d.js');
+cc.loadjs('contactListener.js');
 cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
 cc.loadjs('Stats.js');

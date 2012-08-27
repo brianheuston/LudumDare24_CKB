@@ -63,7 +63,7 @@ Map = new Object({
 				        enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
 				        enemies.init(layer);
 				        enemies.GetSprite().setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i ));
-				        enemies.SetBody(layer.addUpdatableSprite(enemies.GetSprite(),x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i,2,true,false, enemies));
+				        enemies.SetBody(layer.addUpdatableSprite(enemies.GetSprite(),x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i,2,"dynamic",false, enemies));
 				        enemies.Update(1);
 			        }
 					
@@ -121,13 +121,13 @@ Map = new Object({
     },
     addPlayer:function(play,layer){
     	this.player = play;
-        this.player.SetBody(this.layer.addSprite(
+        this.player.SetBody(this.layer.addUpdatableSprite(
         				this.player.GetSprite(),
         				(this.start[1] + 2)*PTM_RATIO,
         				(this.world.length -  (this.start[0] + 1))*PTM_RATIO,
         				4,
         				"dynamic",
-        				true
+        				true,play
         				));
 		this.layer.moveMap(this.player.GetBody());
     },

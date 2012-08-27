@@ -11,7 +11,9 @@ var Box2DLayer = cc.Layer.extend({
     right:false,
     up:false,
     down:false,
-
+    player:null,
+    enemies:[],
+    numberOfEnemies:0,
     //GLESDebugDraw *m_debugDraw;
 
 
@@ -32,6 +34,7 @@ var Box2DLayer = cc.Layer.extend({
 
         // Construct a world object, which will hold and simulate the rigid bodies.
         this.world = new b2World(new b2Vec2(0, 0), false);
+        this.world.SetContactListener(contactListener);
 //        this.world.SetContinuousPhysics(true);
 
         // Define the ground body.
@@ -84,7 +87,10 @@ var Box2DLayer = cc.Layer.extend({
 	        	person:person,
 	        	update:update,
 	        	living:living
-	        })
+	        });
+	    if(person){
+		    this.player = living;
+	    }
         bodyDef.fixedRotation = true;
         var body = this.world.CreateBody(bodyDef);
 //        body.SetLinearVelocity(1,1);
@@ -100,6 +106,9 @@ var Box2DLayer = cc.Layer.extend({
         body.CreateFixture(fixtureDef);
 //        body.SetLinearVelocity(new Box2D.Common.Math.b2Vec2(1, 0));
         this.addChild(sprite,z);
+        if(!person && update){
+	        this.enemies[this.numberOfEnemies++] = update;
+        }
         return body;
  
     },
@@ -141,7 +150,7 @@ var Box2DLayer = cc.Layer.extend({
 	                this.keys(b);
 	                this.moveMap(b);
                 }
-                if(userData.update){
+                if(userData.update && !userData.person){
 	                userData.living.Update(dt);
                 }
                 userData.sprite.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
@@ -149,5 +158,21 @@ var Box2DLayer = cc.Layer.extend({
                 //console.log(b.GetAngle());
             }
         }
-    }
+        var i = 0;
+        var contacts = contactListener.contacts;
+        for(i = 0; i < contacts.length;i++){
+	        if(contacts[i].GetFixtureA().GetBody().GetUserData().update &&
+	        contacts[i].GetFixtureB().GetBody().GetUserData().person){
+	        	var enem = contacts[i].GetFixtureA().GetBody().GetUserData().living;
+		        this.player.Damage(enem.calculatedStats.damage,false);
+	        }
+	        if(contacts[i].GetFixtureB().GetBody().GetUserData().update &&
+	        contacts[i].GetFixtureA().GetBody().GetUserData().person){
+	        	var enem = contacts[i].GetFixtureB().GetBody().GetUserData().living;
+		        this.player.Damage(enem.calculatedStats.damage,false);
+	        }
+        }
+
+    },
+
 });

@@ -68,7 +68,7 @@ LivingObject.prototype = {
         return this.currentMana;
     },
     Damage:function(damage, isMagic) {
-      ChangeHealth(Math.min(0, -damage + (isMagic ? this.calculateStats.spirit() : this.calculatedStats.defense())))
+      this.ChangeHealth(Math.min(0, -damage + (isMagic ? this.calculatedStats.spirit : this.calculatedStats.defense)));
     },
 
     GetSprite:function() {
