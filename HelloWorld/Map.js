@@ -84,7 +84,7 @@ Map = new Object({
 	        x+this.WIDTH*j+this.WIDTH/2,
 	        y+this.HEIGHT*mapPiece.y-this.HEIGHT*i+this.HEIGHT/2,
 	         1,
-	         false,
+	         "static",
 	         false);
 	    }
 	    else{
@@ -126,7 +126,7 @@ Map = new Object({
         				(this.start[1] + 2)*PTM_RATIO,
         				(this.world.length -  (this.start[0] + 1))*PTM_RATIO,
         				4,
-        				true,
+        				"dynamic",
         				true
         				));
 		this.layer.moveMap(this.player.GetBody());

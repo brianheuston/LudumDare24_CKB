@@ -11,6 +11,7 @@ var Box2DLayer = cc.Layer.extend({
     right:false,
     up:false,
     down:false,
+
     //GLESDebugDraw *m_debugDraw;
 
 
@@ -46,22 +47,37 @@ var Box2DLayer = cc.Layer.extend({
 
 
     },
+
     addUpdatableSprite:function(sprite,x,y,z,dynamic,person,living){
     	return this.realAddSprite(sprite,x,y,z,dynamic,person,living,true);
     },
     addSprite:function(sprite,x,y,z,dynamic,person){	
     	return this.realAddSprite(sprite,x,y,z,dynamic,person,null,false);
     },
-    realAddSprite:function(sprite,x,y,z,dynamic,person,living,update){	    
+    realAddSprite:function(sprite,x,y,z,bodyType,person,living,update){	    
         var b2BodyDef = Box2D.Dynamics.b2BodyDef
             , b2Body = Box2D.Dynamics.b2Body
             , b2FixtureDef = Box2D.Dynamics.b2FixtureDef
             , b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
         
         var bodyDef = new b2BodyDef();
-        if(dynamic){
-	        bodyDef.type = b2Body.b2_dynamicBody;
-	    }
+
+        switch (bodyType)
+        {
+            case "dynamic":
+                bodyDef.type = b2Body.b2_dynamicBody;
+                break;
+            case "static":
+                bodyDef.type = b2Body.b2_staticBody;
+                break;
+            case "kinematic":
+                bodyDef.type = b2Body.b2_kinematicBody;
+                break;
+            default:
+                bodyDef.type = b2Body.b2_staticBody;
+                break;
+        }
+
         bodyDef.position.Set(x / PTM_RATIO, y / PTM_RATIO);
         bodyDef.userData = new Object({
 	        	sprite:sprite,
@@ -134,6 +150,11 @@ var Box2DLayer = cc.Layer.extend({
             }
         }
 
+<<<<<<< HEAD
     },
 
 });
+=======
+    }
+});
+>>>>>>> Changing logic to add bodies to map through string
