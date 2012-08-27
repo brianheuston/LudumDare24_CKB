@@ -27,6 +27,9 @@
 cc.loadjs('../box2d/box2d.js');
 cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
+cc.loadjs('Stats.js');
+cc.loadjs('CombatantClasses.js');
+cc.loadjs('Items.js');
 cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
 cc.loadjs('Classes/GameObjects/Enemy.js');

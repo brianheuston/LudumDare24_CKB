@@ -26,7 +26,8 @@ var mapGenerator = function mapGenerator() {
       x: height,
       y: width,
       start: mapInfo.start,
-      end: mapInfo.end
+      end: mapInfo.end,
+      spawns: mapInfo.spawns
     };
   }
 
@@ -101,12 +102,18 @@ var mapGenerator = function mapGenerator() {
       }
     }
     
+    var start = points[first];
+    var end = points[second];
+    points.splice(start, 1);
+    points.splice(end, 1);
+    
     return  {
       grid: ret,
       x: height,
       y: width,
-      start: points[first],
-      end: points[second]
+      start: start,
+      end: end,
+      spawns: points
     };
   }
 

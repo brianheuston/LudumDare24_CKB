@@ -9,9 +9,10 @@ LivingObject.prototype = {
     sprite: null,
     currentHealth:0,
     currentMana:0,
-    maxHealth:0,
-    maxMana:0,
+    currentLevel:0,
+    characterClass:"warrior",
     baseStats: {},
+    calculatedStats: {},
     equipped:{},
     inventory:[],
     time:0,
@@ -29,12 +30,11 @@ LivingObject.prototype = {
         this.sprite = cc.Sprite.createWithBatchNode(LivingObjectSpriteBatch, this.rect);
         this.layer = layer;
 
-        // TODO: Make these set based off of stats?
-        this.SetMaxHealth(100);
-        this.SetMaxMana(100);
+        this.baseStats = combatantClasses.generateStats(this.characterClass, this.currentLevel);
+        this.CalculateStats();
         
-        this.ChangeHealth(100, true);
-        this.ChangeMana(100, true);
+        this.currentHealth = this.MaxHealth();
+        this.currentMana = this.MaxMana();
     },
 
     // To change the facing direction, you should call this. It will flip the sprite accordingly. 
@@ -44,14 +44,22 @@ LivingObject.prototype = {
         !isMovePointLeft ? setFlipX(true) : setFlipX(false);
     },
 
+    MaxHealth:function() {
+      return this.baseStats.health * 10;
+    },
+    
+    MaxMana:function() {
+      return this.baseStats.mana * 10;
+    },
+    
     ChangeHealth:function(value, isIncrease) {
         this.currentHealth += isIncrease ? value : -value;   
-        this.currentHealth = this.currentHealth > this.maxHealth ? this.maxHealth : this.currentHealth;
+        this.currentHealth = this.currentHealth > this.MaxHealth() ? this.MaxHealth() : this.currentHealth;
     },
 
     ChangeMana:function(value, isIncrease) {
         this.currentMana += isIncrease ? value : -value;
-        this.currentMana = this.currentMana > this.maxMana ? this.maxMana : this.currentMana;
+        this.currentMana = this.currentMana > this.MaxMana() ? this.MaxMana() : this.currentMana;
     },
 
     GetHealth:function() {
@@ -60,14 +68,6 @@ LivingObject.prototype = {
 
     GetMana:function() {
         return this.currentMana;
-    },
-
-    SetMaxHealth: function(maxHealth) {
-        this.maxHealth = maxHealth;
-    },
-
-    SetMaxMana: function(maxMana) {
-        this.maxMana = maxMana;
     },
 
     GetSprite:function() {
@@ -82,8 +82,8 @@ LivingObject.prototype = {
     },
     CalculateStats:function() {
       var ret = {};
-      for (var statName in baseStats) {
-        ret[statName] = baseStats[statName];
+      for (var statName in this.baseStats) {
+        ret[statName] = this.baseStats[statName];
       }
       
       for (var slot in this.equipped) {
@@ -94,7 +94,7 @@ LivingObject.prototype = {
         }
       }
       
-      return ret;
+      this.calculatedStats = ret;
     },
     
     Equip:function(item) {
