@@ -124,5 +124,8 @@ LivingObject.prototype = {
 		    this.GetBody().SetLinearVelocity(cc.ccp(10*Math.random()-5,10*Math.random()-5));
 		    this.time = 0;
 	    }
+      
+      ChangeHealth(this.baseStats.regen / 5);
+      ChangeMana(this.baseStats.focus / 5);
     }
 }
