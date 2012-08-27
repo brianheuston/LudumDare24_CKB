@@ -125,7 +125,7 @@ LivingObject.prototype = {
 		    this.time = 0;
 	    }
       
-      ChangeHealth(this.baseStats.regen / 5);
-      ChangeMana(this.baseStats.focus / 5);
+      this.ChangeHealth(this.baseStats.regen / 5);
+      this.ChangeMana(this.baseStats.focus / 5);
     }
 }
