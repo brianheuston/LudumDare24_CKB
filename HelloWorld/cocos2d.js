@@ -77,7 +77,8 @@ cc.loadjs = function (filename) {
             cc.Loader.shareLoader().preload([
                 {type:"image", src:"Resources/oryx_lofi/lofi_environment.png"},
                 {type:"image", src:"Resources/oryx_lofi/lofi_char.png"},
-                {type:"image", src:"Resources/oryx_lofi/lofi_obj.png"}
+                {type:"image", src:"Resources/oryx_lofi/lofi_obj.png"},
+                {type:"image", src:"Resources/oryx_lofi/lofi_obj_packA.png"}
             ]);
         }
     };

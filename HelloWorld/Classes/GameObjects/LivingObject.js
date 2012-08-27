@@ -35,6 +35,8 @@ LivingObject.prototype = {
         
         this.currentHealth = this.MaxHealth();
         this.currentMana = this.MaxMana();
+        
+        this.Equip(items.createRandom(0));
     },
 
     // To change the facing direction, you should call this. It will flip the sprite accordingly. 
@@ -103,7 +105,8 @@ LivingObject.prototype = {
       if (this.equipped[item.slot]) {
         oldItem = this.equipped[item.slot];
       }
-      this.equipped[item.slot] = item
+      this.equipped[item.slot] = item;
+      this.CalculateStats();
       
       return oldItem;
     },

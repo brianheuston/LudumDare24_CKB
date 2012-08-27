@@ -3,7 +3,12 @@ var GUI = cc.Layer.extend({
     screenSize: null,
     screenRatio: 0.25, // 25% of the screen real estate will be used for this
     distanceFromEdgesForHealth: 100,
-    healthHeight: 25, 
+    healthHeight: 25,
+    itemStartLocation: [100,40],
+    itemSeperation: 100,
+    itemSize: 50,
+    scale:40,
+    currentItemsSprites: {},
 
     ctor:function() {
         
@@ -96,7 +101,7 @@ var GUI = cc.Layer.extend({
         this.DrawRect((this.distanceFromEdgesForHealth + this.healthHeight + 3),
                       this.screenSize.height * this.screenRatio + 2,
                       (this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 1))
-                        * (Map.player.currentHealth / Map.player.MaxHealth()),
+                        * (this.player.currentHealth / this.player.MaxHealth()),
                       this.healthHeight - 6,
                       true);
 
@@ -120,9 +125,36 @@ var GUI = cc.Layer.extend({
         this.DrawRect(this.screenSize.width / 2 + 3,
                       this.screenSize.height * this.screenRatio + 2,
                       (this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 1)) *
-                        (Map.player.currentMana / Map.player.MaxMana()),
+                        (this.player.currentMana / this.player.MaxMana()),
                       this.healthHeight - 6,
                       true);
+                      
+        // drawItems
+        cc.renderContext.fillStyle = "rgba(0,0,0,1)";
+        cc.renderContext.strokeStyle = "rgba(0,0,0,1)";
+        var itemIconPos = [this.itemStartLocation[0], this.itemStartLocation[1]];
+  
+        for (var slot in items.slots) {
+          this.DrawRect(itemIconPos[0],
+                        itemIconPos[1],
+                        this.itemSize,
+                        this.itemSize,
+                        false);
+          
+          if (this.player.equipped[slot] && 
+               (!this.currentItemsSprites[slot] ||
+               this.player.equipped[slot] !== this.currentItemsSprites[slot].itemInfo)) {
+            this.currentItemsSprites[slot] = new Item(new cc.Rect(this.player.equipped[slot].icon.location[0] * this.scale,
+                                                                  this.player.equipped[slot].icon.location[1] * this.scale,
+                                                                  this.scale,
+                                                                  this.scale),
+                                                                  this.player.equipped[slot]);
+            this.currentItemsSprites[slot].init(this);
+            this.addChild(this.currentItemsSprites[slot].sprite);
+            this.currentItemsSprites[slot].sprite.setPosition(cc.ccp(itemIconPos[0] + 25, itemIconPos[1] + 25));
+          }
+          itemIconPos[0] = itemIconPos[0] + this.itemSeperation;
+        }
     },
 
     DrawRect: function(x, y, width, height, fill) {

@@ -30,6 +30,7 @@ cc.loadjs('Box2DLayer.js');
 cc.loadjs('Map.js');//19
 cc.loadjs('Stats.js');
 cc.loadjs('CombatantClasses.js');
+cc.loadjs('ItemSprites.js');
 cc.loadjs('Items.js');
 cc.loadjs('Classes/GameObjects/LivingObject.js');
 cc.loadjs('Classes/GameObjects/Player.js');
@@ -101,7 +102,6 @@ var Helloworld = cc.Layer.extend({
         Map.scale = this.scale;
         Map.init(this.map,this.scale);
         cc.KeypadHandler.create(this);
-        LivingObjectSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_char.png");
         AttackSpriteBatch = new cc.SpriteBatchNode.create("Resources/oryx_lofi/lofi_obj.png");
 
         this.player = new Player( 

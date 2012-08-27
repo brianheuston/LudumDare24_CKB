@@ -110,7 +110,7 @@ Map = new Object({
         var map = mapGenerator.generate(30, 40);
         this.start = map.start;
         this.loadWorld(layer, map, 0, 0, 0, 0);
-        this.layer = layer;	        
+        this.layer = layer;
 	 /*
    this.enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
 	    this.enemies.init(layer);
