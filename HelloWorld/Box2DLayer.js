@@ -149,12 +149,5 @@ var Box2DLayer = cc.Layer.extend({
                 //console.log(b.GetAngle());
             }
         }
-
-<<<<<<< HEAD
-    },
-
-});
-=======
     }
 });
->>>>>>> Changing logic to add bodies to map through string
