@@ -118,10 +118,11 @@ LivingObject.prototype = {
     GetLocation: { value: function() {
         return this.playerLocation;
     } },
-    update:{value:function(dt){
+    Update: function(dt){
 	    this.time += dt;
-	    if(time > this.update){
-		    this.getBody().SetLinearVelocity(Math.Random(),Math.Random());
+	    if(this.time > this.update){
+		    this.GetBody().SetLinearVelocity(cc.ccp(10*Math.random()-5,10*Math.random()-5));
+		    this.time = 0;
 	    }
-    }},
+    }
 }

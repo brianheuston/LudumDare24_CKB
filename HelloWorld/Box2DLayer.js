@@ -71,6 +71,7 @@ var Box2DLayer = cc.Layer.extend({
 	        })
         bodyDef.fixedRotation = true;
         var body = this.world.CreateBody(bodyDef);
+//        body.SetLinearVelocity(1,1);
         // Define another box shape for our dynamic body.
         var dynamicBox = new b2PolygonShape();
         dynamicBox.SetAsBox(35/PTM_RATIO/2, 35/PTM_RATIO/2);//These are mid points for our 1m box
@@ -115,6 +116,7 @@ var Box2DLayer = cc.Layer.extend({
         //Iterate over the bodies in the physics world
         var userData;
         var sprite;
+        
         for (var b = this.world.GetBodyList(); b; b = b.GetNext()) {
             if (b.GetUserData() != null) {
                 //Synchronize the AtlasSprites position and rotation with the corresponding body
@@ -124,7 +126,7 @@ var Box2DLayer = cc.Layer.extend({
 	                this.moveMap(b);
                 }
                 if(userData.update){
-	                //userData.living.update(dt);
+	                userData.living.Update(dt);
                 }
                 userData.sprite.setPosition(cc.PointMake(b.GetPosition().x * PTM_RATIO, b.GetPosition().y * PTM_RATIO));
                 userData.sprite.setRotation(-1 * cc.RADIANS_TO_DEGREES(b.GetAngle()));

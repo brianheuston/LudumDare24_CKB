@@ -37,7 +37,7 @@ Map = new Object({
     start:null,
     layer:null,
     size:null,
-    enemyChance:.05,
+    enemyChance:.02,
     loadWorld: function(layer,mapPiece,x, y,pieceX,pieceY ) {
     	var worldInNumbers =   mapPiece.grid;
 		var i = 0;
@@ -49,6 +49,7 @@ Map = new Object({
 			if(pieceX == 0){
 				this.pieces[pieceY+i] = [];
 			}
+			var enemies;
 			for(j = 0; j < mapPiece.x; j++){
 //				console.log("y:"+pieceY+" x:"+pieceX+" i:"+i+" j:"+j+" world:"+worldInNumbers[i][j]);
 // 				console.log("x:"+MapTile[worldInNumbers[i][j]].X*40+" y:"+MapTile[worldInNumbers[i][j]].Y*HEIGHT+" num:"+worldInNumbers[i][j]); 
@@ -59,10 +60,11 @@ Map = new Object({
 				}
 				else{
 			        if(Math.random() < this.enemyChance){						        
-				        this.enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
-				        this.enemies.init(layer);
-				        this.enemies.GetSprite().setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i ));
-				        this.enemies.SetBody(layer.addUpdatableSprite(this.enemies.GetSprite(),x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i,2,true,false, this.enemies));
+				        enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
+				        enemies.init(layer);
+				        enemies.GetSprite().setPosition(cc.ccp(x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i ));
+				        enemies.SetBody(layer.addUpdatableSprite(enemies.GetSprite(),x+this.WIDTH*j,y+this.HEIGHT*mapPiece.y-this.HEIGHT*i,2,true,false, enemies));
+				        enemies.Update(1);
 			        }
 					
 				}
@@ -108,7 +110,13 @@ Map = new Object({
         var map = mapGenerator.generate(30, 40);
         this.start = map.start;
         this.loadWorld(layer, map, 0, 0, 0, 0);
-        this.layer = layer;
+        this.layer = layer;	        
+	 /*
+   this.enemies = new Enemy(new cc.Rect(0, 9*8*this.scale, 8 * this.scale, 8 * this.scale));
+	    this.enemies.init(layer);
+	    this.enemies.GetSprite().setPosition(cc.ccp(this.WIDTH/2,this.HEIGHT/2));
+	    this.enemies.SetBody(layer.addUpdatableSprite(this.WIDTH/2,this.HEIGHT/2,2,true,false, this.enemies));
+*/
 
     },
     addPlayer:function(play,layer){
