@@ -52,14 +52,12 @@ LivingObject.prototype = {
       return this.baseStats.mana * 10;
     },
     
-    ChangeHealth:function(value, isIncrease) {
-        this.currentHealth += isIncrease ? value : -value;   
-        this.currentHealth = this.currentHealth > this.MaxHealth() ? this.MaxHealth() : this.currentHealth;
+    ChangeHealth:function(value) {
+        this.currentHealth = Math.max(Math.min(this.currentHealth + value, this.MaxHealth()),0);
     },
 
-    ChangeMana:function(value, isIncrease) {
-        this.currentMana += isIncrease ? value : -value;
-        this.currentMana = this.currentMana > this.MaxMana() ? this.MaxMana() : this.currentMana;
+    ChangeMana:function(value) {
+        this.currentMana = Math.max(Math.min(this.currentMana + value, this.MaxMana()),0);
     },
 
     GetHealth:function() {
@@ -68,6 +66,9 @@ LivingObject.prototype = {
 
     GetMana:function() {
         return this.currentMana;
+    },
+    Damage:function(damage, isMagic) {
+      ChangeHealth(Math.min(0, -damage + (isMagic ? this.calculateStats.spirit() : this.calculatedStats.defense())))
     },
 
     GetSprite:function() {
