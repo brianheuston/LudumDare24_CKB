@@ -90,8 +90,19 @@ var GUI = cc.Layer.extend({
                       this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 3),
                       this.healthHeight - 6,
                       false);
+                      
+        cc.renderContext.fillStyle = "rgba(255,0,0,1)";
+        cc.renderContext.strokeStyle = "rgba(255,0,0,1)";
+        this.DrawRect((this.distanceFromEdgesForHealth + this.healthHeight + 3),
+                      this.screenSize.height * this.screenRatio + 2,
+                      (this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 1))
+                        * (Map.player.currentHealth / Map.player.MaxHealth()),
+                      this.healthHeight - 6,
+                      true);
 
         // Mana bar
+        cc.renderContext.fillStyle = "rgba(0,0,0,1)";
+        cc.renderContext.strokeStyle = "rgba(0,0,0,1)";
         this.DrawRect(this.screenSize.width / 2 + 1,
                       this.screenSize.height * this.screenRatio + 2,
                       this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 1),
@@ -103,6 +114,15 @@ var GUI = cc.Layer.extend({
                       this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 3),
                       this.healthHeight - 6,
                       false);
+                      
+        cc.renderContext.fillStyle = "rgba(0,0,255,1)";
+        cc.renderContext.strokeStyle = "rgba(0,0,255,1)";
+        this.DrawRect(this.screenSize.width / 2 + 3,
+                      this.screenSize.height * this.screenRatio + 2,
+                      (this.screenSize.width / 2 - (this.distanceFromEdgesForHealth + this.healthHeight + 1)) *
+                        (Map.player.currentMana / Map.player.MaxMana()),
+                      this.healthHeight - 6,
+                      true);
     },
 
     DrawRect: function(x, y, width, height, fill) {
